@@ -6,6 +6,7 @@
 * CreateTime    :  2020/05/05 12:57:58
 ************************************************************************************/
 
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Quan
@@ -32,6 +33,25 @@ namespace Quan
 
             // Return the builder
             return builder;
+        }
+
+        /// <summary>
+        /// Injects a file logger into the framework construction
+        /// </summary>
+        /// <param name="construction">The construction</param>
+        /// <param name="logPath">The path of the file to log to</param>
+        /// <returns></returns>
+        public static FrameworkConstruction UseFileLogger(this FrameworkConstruction construction, string logPath = "log.txt")
+        {
+            // Add logging as default
+            construction.Services.AddLogging(options =>
+            {
+                // Add file logger
+                options.AddFile(logPath);
+            });
+
+            // Chain the construction
+            return construction;
         }
     }
 }
