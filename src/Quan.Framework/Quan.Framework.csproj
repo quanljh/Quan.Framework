@@ -9,7 +9,7 @@
     <RepositoryUrl>https://github.com/quanljh/Quan.Framework</RepositoryUrl>
     <RepositoryType></RepositoryType>
     <PackageReleaseNotes>A cross-platform base framework useful for IoC, logging etc...</PackageReleaseNotes>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <PackageTags>cross platform framework logger</PackageTags>
   </PropertyGroup>
 
@@ -27,6 +27,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="3.1.3" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.3" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
 </Project>
