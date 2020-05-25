@@ -39,7 +39,7 @@ namespace Quan
                 message += Environment.NewLine + exceptionMessage;
 
             // Format the message string
-            return $"{message}  [{Path.GetFileName(filePath)} > {origin}() > Line {lineNumber}]{Environment.NewLine}";
+            return $"{message}  [{Path.GetFileName(filePath)} > {origin}() > Line {lineNumber}]{Environment.NewLine} {exceptionMessage}";
 
         }
     }
