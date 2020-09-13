@@ -41,7 +41,7 @@ namespace Quan
         /// <param name="construction">The construction</param>
         /// <param name="logPath">The path of the file to log to</param>
         /// <returns></returns>
-        public static FrameworkConstruction UseFileLogger(this FrameworkConstruction construction, string logPath = "log.txt")
+        public static FrameworkConstruction AddFileLogger(this FrameworkConstruction construction, string logPath = "log.txt")
         {
             // Add logging as default
             construction.Services.AddLogging(options =>

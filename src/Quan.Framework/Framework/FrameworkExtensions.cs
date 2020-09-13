@@ -32,12 +32,20 @@ namespace Quan
             // Create our configuration sources
             var configurationBuilder = new ConfigurationBuilder()
                 // Add environment variables
-                .AddEnvironmentVariables()
-                // Set base path for json files as the startup location of the application
-                .SetBasePath(Directory.GetCurrentDirectory())
-                // Add app settings json files
-                .AddJsonFile("appsettings.json", false, true)
-                .AddJsonFile($"appsettings.{construction.Environment.Configuration}.json", true, true);
+                .AddEnvironmentVariables();
+
+            // If we are not on a mobile platform...
+            if (!construction.Environment.IsMobile)
+            {
+                // Add file based configuration
+
+                // Set base path for Json files as the startup location of the application
+                configurationBuilder.SetBasePath(Directory.GetCurrentDirectory());
+
+                // Add application settings json files
+                configurationBuilder.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                configurationBuilder.AddJsonFile($"appsettings.{construction.Environment.Configuration}.json", true, true);
+            }
 
             // Let custom configuration happen
             configure?.Invoke(configurationBuilder);
@@ -60,7 +68,7 @@ namespace Quan
         /// </summary>
         /// <param name="construction"></param>
         /// <returns></returns>
-        public static FrameworkConstruction UseDefaultServices(this FrameworkConstruction construction)
+        public static FrameworkConstruction AddDefaultServices(this FrameworkConstruction construction)
         {
 
             // Add exception handler
