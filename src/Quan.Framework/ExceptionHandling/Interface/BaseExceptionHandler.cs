@@ -1,12 +1,6 @@
-﻿/************************************************************************************
-* Copyright (c) 2020 quanljh@gmail.com All Rights Reserved.
-* Author        :  quanljh
-* NameSpace     :  Quan.ExceptionHandling.Interface
-* FileName      :  BaseExceptionHandler
-* CreateTime    :  2020/05/06 21:30:19
-************************************************************************************/
+﻿using System;
 
-using System;
+using static Quan.FrameworkDI;
 
 namespace Quan
 {
@@ -23,7 +17,7 @@ namespace Quan
         {
             // Log it
             // TODO: Localization of strings
-            Framework.Logger.LogCriticalSource("Unhandled exception occurred", exception: exception);
+            Logger.LogCriticalSource("Unhandled exception occurred", exception: exception);
         }
     }
 }

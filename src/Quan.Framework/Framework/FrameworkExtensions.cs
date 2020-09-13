@@ -1,12 +1,4 @@
-﻿/************************************************************************************
-* Copyright (c) 2020 quanljh@gmail.com All Rights Reserved.
-* Author        :  quanljh
-* NameSpace     :  Dna
-* FileName      :  FrameworkExtensions
-* CreateTime    :  2020/05/05 10:50:37
-************************************************************************************/
-
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -22,12 +14,12 @@ namespace Quan
         #region Configuration
 
         /// <summary>
-        /// Configures a framework construction
+        /// Configures a framework construction in the default way
         /// </summary>
         /// <param name="construction">The construction to configure</param>
         /// <param name="configure">The custom configuration action</param>
         /// <returns></returns>
-        public static FrameworkConstruction Configure(this FrameworkConstruction construction, Action<IConfigurationBuilder> configure = null)
+        public static FrameworkConstruction AddDefaultConfiguration(this FrameworkConstruction construction, Action<IConfigurationBuilder> configure = null)
         {
             // Create our configuration sources
             var configurationBuilder = new ConfigurationBuilder()
@@ -55,7 +47,25 @@ namespace Quan
             construction.Services.AddSingleton<IConfiguration>(configuration);
 
             // Set the construction configuration
-            construction.Configuration = configuration;
+            construction.UseConfiguration(configuration);
+
+            // Chain the construction
+            return construction;
+        }
+
+        /// <summary>
+        /// Configures a framework construction using the provided configuration
+        /// </summary>
+        /// <param name="construction">The construction to configure</param>
+        /// <param name="configuration">The configuration</param>
+        /// <returns></returns>
+        public static FrameworkConstruction AddConfiguration(this FrameworkConstruction construction, IConfiguration configuration)
+        {
+            // Add specific configuration
+            construction.UseConfiguration(configuration);
+
+            // Add configuration to services
+            construction.Services.AddSingleton(configuration);
 
             // Chain the construction
             return construction;

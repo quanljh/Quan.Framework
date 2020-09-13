@@ -1,25 +1,24 @@
 ﻿using System.Diagnostics;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace Quan
 {
     /// <summary>
-    /// Details about the current system environment
+    /// Default implementation about the current framework environment
     /// </summary>
-    public class FrameworkEnvironment
+    public class DefaultFrameworkEnvironment : IFrameworkEnvironment
     {
         #region Public Properties
 
         /// <summary>
-        /// A flag indicating if the environment is in debug. 
-        /// This should be set manually or by calling Framework.SetEnvironment() 
-        /// from the calling application.
+        /// True if we are in a development (specifically, debuggable) environment
         /// </summary>
-        public bool IsDevelopment { get; set; }
+        public bool IsDevelopment => Assembly.GetEntryAssembly()?.GetCustomAttribute<DebuggableAttribute>()?.IsJITTrackingEnabled == true;
 
-        /// <summary> 
-        /// The configuration of the environment, either Development or Production 
-        /// </summary> 
+        /// <summary>
+        /// The configuration of the environment, either Development or Production
+        /// </summary>
         public string Configuration => IsDevelopment ? "Development" : "Production";
 
         /// <summary>
@@ -36,34 +35,9 @@ namespace Quan
         /// <summary>
         /// Default constructor
         /// </summary>
-        public FrameworkEnvironment()
+        public DefaultFrameworkEnvironment()
         {
-            // So if we are inside this framework or referencing the source code directly
-            // then this #if will compile, run and set the mIsDevelopment correctly
-            // without _requiring_ calling Framework.SetEnvironment()
-            //
-            // If we instead package this to a NuGet and so compile in Release mode
-            // this line will be removed and it will fall back to requiring either 
-            // manually setting IsDevelopment or calling Framework.SetEnvironment()
-#if DEBUG
-            SetEnvironment();
-#endif
-        }
 
-        #endregion
-
-        #region Public Methods
-
-        /// <summary>
-        /// Sets up the environment variables such as <see cref="IsDevelopment"/>
-        /// based on the environment of the calling application
-        /// </summary>
-        [Conditional("DEBUG")]
-        public void SetEnvironment()
-        {
-            // Set the IsDevelopment based on if the calling application 
-            // has the DEBUG symbol constant
-            IsDevelopment = true;
         }
 
         #endregion

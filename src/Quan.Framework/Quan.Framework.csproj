@@ -9,7 +9,7 @@
     <RepositoryUrl>https://github.com/quanljh/Quan.Framework</RepositoryUrl>
     <RepositoryType></RepositoryType>
     <PackageReleaseNotes>A cross-platform base framework useful for IoC, logging etc...</PackageReleaseNotes>
-    <Version>1.0.5</Version>
+    <Version>1.0.6</Version>
     <PackageTags>cross platform framework logger</PackageTags>
   </PropertyGroup>
 

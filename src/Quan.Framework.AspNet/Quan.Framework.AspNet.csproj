@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Quan.AspNet</RootNamespace>
+    <Authors>Quanljh</Authors>
+    <Company>Quan</Company>
+    <Description>The ASP.Net Core easy-integration support for Quan.Framework, the cross-platform base framework useful for all projects that use .Net Core</Description>
+    <PackageProjectUrl>https://github.com/quanljh/Quan.Framework</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/quanljh/Quan.Framework</RepositoryUrl>
+    <PackageTags>quan framework asp net cross platform</PackageTags>
+    <PackageReleaseNotes>The ASP.Net Core easy-integration support for Quan.Framework, the cross-platform base framework useful for all projects that use .Net Core</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\Code\Quan\src\Quan.Framework.AspNet\Quan.Framework.AspNet.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Quan.Framework" Version="1.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
+  </ItemGroup>
+
+</Project>
