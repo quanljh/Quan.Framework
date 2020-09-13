@@ -70,6 +70,10 @@ namespace Quan
         /// <summary>
         /// Casts the underlying object to the specified type
         /// </summary>
-        public new T ServerResponse { get; set; }
+        public new T ServerResponse
+        {
+            get => (T)base.ServerResponse;
+            set => base.ServerResponse = value;
+        }
     }
 }

@@ -6,7 +6,7 @@
 * CreateTime    :  2020/05/05 14:32:48
 ************************************************************************************/
 
-using System.Collections.Generic;
+using System.Linq;
 
 namespace Quan
 {
@@ -24,14 +24,8 @@ namespace Quan
         /// <returns></returns>
         public static T[] Append<T>(this T[] source, params T[] toAdd)
         {
-            // Create a list of the original items
-            var list = new List<T>(source);
-
-            // Append the new items
-            list.AddRange(toAdd);
-
-            // Return the new array
-            return list.ToArray();
+            // Append and return the new items
+            return source.Concat(toAdd).ToArray();
         }
 
 
@@ -44,14 +38,8 @@ namespace Quan
         /// <returns></returns>
         public static T[] Prepend<T>(this T[] source, params T[] toAdd)
         {
-            // Create a list of the new items
-            var list = new List<T>(toAdd);
-
-            // Append the source items
-            list.AddRange(source);
-
-            // Return the new array
-            return list.ToArray();
+            // Prepend and return the new items
+            return toAdd.Append(source);
         }
     }
 }

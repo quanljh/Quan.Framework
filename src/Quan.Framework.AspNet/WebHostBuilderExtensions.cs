@@ -9,12 +9,12 @@ namespace Quan.AspNet
     public static class WebHostBuilderExtensions
     {
         /// <summary>
-        /// Adds the Dna Framework construct to the ASP.Net Core application
+        /// Adds the Quan Framework construct to the ASP.Net Core application
         /// </summary>
         /// <param name="builder">The web host builder</param>
         /// <param name="configure">Custom action to configure the Dna Framework</param>
         /// <returns></returns>
-        public static IWebHostBuilder UseDnaFramework(this IWebHostBuilder builder, Action<FrameworkConstruction> configure = null)
+        public static IWebHostBuilder UseQuanFramework(this IWebHostBuilder builder, Action<FrameworkConstruction> configure = null)
         {
             builder.ConfigureServices((context, services) =>
             {
@@ -25,7 +25,8 @@ namespace Quan.AspNet
                 // be used by DnaFramework 
                 services.AddDnaFramework()
                     // Add configuration
-                    .AddConfiguration(context.Configuration);
+                    .AddConfiguration(context.Configuration)
+                    .AddDefaultServices();
 
                 // Fire off construction configuration
                 configure?.Invoke(Framework.Construction);

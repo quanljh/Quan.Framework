@@ -9,9 +9,9 @@
             Extensions for <see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/>
             </summary>
         </member>
-        <member name="M:Quan.AspNet.ApplicationBuilderExtensions.UseDnaFramework(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+        <member name="M:Quan.AspNet.ApplicationBuilderExtensions.UseQuanFramework(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
             <summary>
-            Builds the Dna Framework Construct and sets the Framework.Provider from the <see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/>
+            Builds the Quan Framework Construct and sets the Framework.Provider from the <see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/>
             </summary>
             <param name="app">The application builder</param>
             <returns></returns>
@@ -21,9 +21,9 @@
             Extensions for <see cref="T:Microsoft.AspNetCore.Hosting.IWebHostBuilder"/>
             </summary>
         </member>
-        <member name="M:Quan.AspNet.WebHostBuilderExtensions.UseDnaFramework(Microsoft.AspNetCore.Hosting.IWebHostBuilder,System.Action{Quan.FrameworkConstruction})">
+        <member name="M:Quan.AspNet.WebHostBuilderExtensions.UseQuanFramework(Microsoft.AspNetCore.Hosting.IWebHostBuilder,System.Action{Quan.FrameworkConstruction})">
             <summary>
-            Adds the Dna Framework construct to the ASP.Net Core application
+            Adds the Quan Framework construct to the ASP.Net Core application
             </summary>
             <param name="builder">The web host builder</param>
             <param name="configure">Custom action to configure the Dna Framework</param>
