@@ -29,10 +29,14 @@ namespace Quan.Web
         /// <param name="content">The content to post</param>
         /// <param name="sendType">The format to serialize the content into</param>
         /// <param name="returnType">The expected type of content to be returned from the server</param>
+        /// <param name="configureRequest">Allows caller to customize and configure the request prior to the content being writter and sent</param>
+        /// <param name="bearerToken">If specified, provides the Authorization header with 'bearer token-here' for things like JWT bearer tokens</param>
         /// <returns></returns>
         public static async Task<HttpWebResponse> PostAsync(string url, object content = null,
             KnownContentSerializers sendType = KnownContentSerializers.Json,
-            KnownContentSerializers returnType = KnownContentSerializers.Json)
+            KnownContentSerializers returnType = KnownContentSerializers.Json,
+            Action<HttpWebRequest> configureRequest = null,
+            string bearerToken = null)
         {
             #region Setup
 
@@ -47,6 +51,14 @@ namespace Quan.Web
 
             // Set the content type 
             request.ContentType = sendType.ToMimeString();
+
+            // If we have a bearer token...
+            if (bearerToken != null)
+                // Add bearer token to header
+                request.Headers.Add(HttpRequestHeader.Authorization, $"Bearer {bearerToken}");
+
+            // Any custom work
+            configureRequest?.Invoke(request);
 
             #endregion
 
@@ -100,8 +112,18 @@ namespace Quan.Web
 
             #endregion
 
-            // Return the raw server response
-            return await request.GetResponseAsync() as HttpWebResponse;
+            // Wrap call...
+            try
+            {
+                // Return the raw server response
+                return await request.GetResponseAsync() as HttpWebResponse;
+            }
+            // Catch Web Exceptions (which throw for things like 401)
+            catch (WebException ex)
+            {
+                // And instead, return the response and let the caller decide what to do with the StatusCode
+                return ex.Response as HttpWebResponse;
+            }
         }
 
 
@@ -112,13 +134,17 @@ namespace Quan.Web
         /// <param name="content">The content to post</param>
         /// <param name="sendType">The format to serialize the content into</param>
         /// <param name="returnType">The expected type of content to be returned from the server</param>
+        /// <param name="configureRequest">Allows caller to customize and configure the request prior to the content being writter and sent</param>
+        /// <param name="bearerToken">If specified, provides the Authorization header with 'bearer token-here' for things like JWT bearer tokens</param>
         /// <returns></returns>
         public static async Task<WebRequestResult<TResponse>> PostAsync<TResponse>(string url, object content = null,
             KnownContentSerializers sendType = KnownContentSerializers.Json,
-            KnownContentSerializers returnType = KnownContentSerializers.Json)
+            KnownContentSerializers returnType = KnownContentSerializers.Json,
+            Action<HttpWebRequest> configureRequest = null,
+        string bearerToken = null)
         {
             // Make the standard Post call first
-            var serverResponse = await PostAsync(url, content, sendType, returnType);
+            var serverResponse = await PostAsync(url, content, sendType, returnType, configureRequest, bearerToken);
 
             // Create a result
             var result = serverResponse.CreateWebRequestResult<TResponse>();
@@ -127,9 +153,7 @@ namespace Quan.Web
             if (result.StatusCode != HttpStatusCode.OK)
             {
                 // Call failed
-                // TODO: Localize string
-                result.ErrorMessage =
-                    $"Server returned unsuccessful status code. {serverResponse.StatusCode} {serverResponse.StatusDescription}";
+                // Return no error message so the client can display its own based on the status code
 
                 // Done
                 return result;

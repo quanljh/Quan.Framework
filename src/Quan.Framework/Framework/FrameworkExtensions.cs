@@ -30,8 +30,8 @@ namespace Quan
             if (!construction.Environment.IsMobile)
             {
                 // Add file based configuration
-
-                // Set base path for Json files as the startup location of the application
+                // In the ASP.NET Core application the settings file are loaded from the app's content root by calling CreateDefaultBuilder during host construction.
+                // For other .net application, such as WPF application we need set base path for Json files as the startup location of the application
                 configurationBuilder.SetBasePath(Directory.GetCurrentDirectory());
 
                 // Add application settings json files
@@ -42,8 +42,10 @@ namespace Quan
             // Let custom configuration happen
             configure?.Invoke(configurationBuilder);
 
-            // Inject configuration into services
+            // Build configuration like BuildHostConfiguration() included by ASP.NET Core IHostBuilder.Build() method.
             var configuration = configurationBuilder.Build();
+
+            // Inject configuration into services
             construction.Services.AddSingleton<IConfiguration>(configuration);
 
             // Set the construction configuration

@@ -16,7 +16,7 @@ namespace Quan
     /// <code>
     /// 
     ///     // Build the framework adding any required services
-    ///     Framework.Construction.DefaultFrameworkConstruction()
+    ///     Framework.Construction<T>().DefaultFrameworkConstruction()
     ///             .AddFileLogger()
     ///             .Build();
     ///             
