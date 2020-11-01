@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
+using System.Reflection;
 
 namespace Quan
 {
@@ -32,7 +33,7 @@ namespace Quan
                 // Add file based configuration
                 // In the ASP.NET Core application the settings file are loaded from the app's content root by calling CreateDefaultBuilder during host construction.
                 // For other .net application, such as WPF application we need set base path for Json files as the startup location of the application
-                configurationBuilder.SetBasePath(Directory.GetCurrentDirectory());
+                configurationBuilder.SetBasePath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
 
                 // Add application settings json files
                 configurationBuilder.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);

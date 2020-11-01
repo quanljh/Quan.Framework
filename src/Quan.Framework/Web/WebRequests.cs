@@ -121,8 +121,14 @@ namespace Quan.Web
             // Catch Web Exceptions (which throw for things like 401)
             catch (WebException ex)
             {
-                // And instead, return the response and let the caller decide what to do with the StatusCode
-                return ex.Response as HttpWebResponse;
+                // If we got a response...
+                if (ex.Response is HttpWebResponse httpResponse)
+                    // Return the response
+                    return httpResponse;
+
+                // Otherwise, we don't have any information to be able to return
+                // So re-throw
+                throw;
             }
         }
 
