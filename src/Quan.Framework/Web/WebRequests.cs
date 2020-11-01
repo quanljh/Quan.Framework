@@ -149,8 +149,23 @@ namespace Quan.Web
             Action<HttpWebRequest> configureRequest = null,
         string bearerToken = null)
         {
-            // Make the standard Post call first
-            var serverResponse = await PostAsync(url, content, sendType, returnType, configureRequest, bearerToken);
+            var serverResponse = default(HttpWebResponse);
+
+            try
+            {
+                // Make the standard Post call first
+                serverResponse = await PostAsync(url, content, sendType, returnType, configureRequest, bearerToken);
+
+            }
+            catch (Exception ex)
+            {
+                // If we got unexpected error, return that
+                return new WebRequestResult<TResponse>
+                {
+                    // Include exception message
+                    ErrorMessage = ex.Message
+                };
+            }
 
             // Create a result
             var result = serverResponse.CreateWebRequestResult<TResponse>();
